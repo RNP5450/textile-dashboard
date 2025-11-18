@@ -1,274 +1,345 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
-  LineChart, 
-  Line, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer,
-  ScatterChart, 
-  Scatter, 
-  ZAxis,
-  ReferenceLine
-} from 'recharts';
-import { 
-  Activity, 
-  MapPin, 
-  Database, 
-  Cpu, 
+  Recycle, 
+  Leaf, 
   Droplets, 
-  Wind, 
-  AlertTriangle,
-  Terminal,
-  TrendingUp,
-  Factory
+  Users, 
+  ArrowRight, 
+  BookOpen, 
+  Calculator, 
+  Mail,
+  MapPin,
+  CheckCircle2,
+  XCircle,
+  GraduationCap
 } from 'lucide-react';
 
-// --- Real Survey Data (Mocked into Structure) ---
-const COMPANY_DATA = [
-  { id: 1, name: 'Galiyar Waste', location: 'Pimpri-Chinchwad', method: 'Mechanical', scale: 1200, ghg: 30, type: 'Small' },
-  { id: 2, name: 'Greenwear', location: 'Bhosari MIDC', method: 'Thermal', scale: 800, ghg: 20, type: 'Small' },
-  { id: 3, name: 'Biolaxi Enzymes', location: 'Thane', method: 'Bio-Enzymatic', scale: 500, ghg: 70, type: 'Pilot' },
-  { id: 4, name: 'Circular Threads', location: 'Pune City', method: 'Upcycling', scale: 300, ghg: 35, type: 'SME' },
-  { id: 5, name: 'EnviGreen', location: 'Pune', method: 'Thermal & Chem', scale: 1000, ghg: 40, type: 'Pilot' },
-  { id: 6, name: 'Arvind Ltd.', location: 'Mumbai', method: 'Mechanical', scale: 5000, ghg: 55, type: 'Industrial' },
-  { id: 7, name: 'Aditya Birla', location: 'Mumbai', method: 'Chemical', scale: 3500, ghg: 65, type: 'Industrial' },
-  { id: 8, name: 'Upcyclers India', location: 'Mumbai', method: 'Upcycling', scale: 250, ghg: 30, type: 'SME' },
-  { id: 9, name: 'Renewcell', location: 'Mumbai', method: 'Chemical', scale: 2000, ghg: 75, type: 'Industrial' },
-  { id: 10, name: 'Ginni Filaments', location: 'Mumbai', method: 'Mech + Chem', scale: 1800, ghg: 60, type: 'Industrial' },
-];
+// --- Pages Components ---
 
-const ZONES = [
-  { id: 'pune', name: 'Pune City', coords: { x: 65, y: 60 }, type: 'Mixed' },
-  { id: 'pimpri', name: 'Pimpri-Chinchwad', coords: { x: 55, y: 50 }, type: 'Mechanical Hub' },
-  { id: 'bhosari', name: 'Bhosari MIDC', coords: { x: 60, y: 40 }, type: 'Thermal Hub' },
-  { id: 'thane', name: 'Thane', coords: { x: 30, y: 20 }, type: 'Bio-Innovation' },
-  { id: 'mumbai', name: 'Mumbai Port', coords: { x: 20, y: 60 }, type: 'Industrial Export' },
-];
-
-const CustomTooltip = ({ active, payload }) => {
-  if (active && payload && payload.length) {
-    const data = payload[0].payload;
-    return (
-      <div className="bg-slate-900 border border-slate-600 p-3 rounded shadow-xl text-xs">
-        <p className="font-bold text-emerald-400 mb-1">{data.name}</p>
-        <p className="text-slate-300">Method: {data.method}</p>
-        <p className="text-slate-300">Scale: {data.scale} kg/mo</p>
-        <p className="text-slate-300">GHG Red: {data.ghg}%</p>
+const HomePage = ({ navigate }) => (
+  <div className="animate-fade-in">
+    {/* Hero Section */}
+    <section className="relative bg-emerald-900 text-white py-20 px-6 rounded-3xl m-4 overflow-hidden">
+      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523293968677-8122313283e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] opacity-20 bg-cover bg-center"></div>
+      <div className="relative z-10 max-w-4xl mx-auto text-center">
+        <span className="inline-block py-1 px-3 rounded-full bg-emerald-800/50 border border-emerald-500/50 text-emerald-300 text-sm font-bold mb-6 backdrop-blur-sm">
+          AWARENESS INITIATIVE
+        </span>
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+          Recycling Isn't Just a Choice.<br/>It's Our Future.
+        </h1>
+        <p className="text-lg md:text-xl text-emerald-100 mb-10 max-w-2xl mx-auto">
+          Join the movement to switch from harmful mechanical shredding to sustainable bio-enzymatic solutions. Knowledge is the first step to change.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <button onClick={() => navigate('methods')} className="bg-white text-emerald-900 px-8 py-4 rounded-full font-bold hover:bg-emerald-50 transition-transform hover:scale-105 flex items-center justify-center gap-2 shadow-lg">
+            <BookOpen size={20} /> Learn the Methods
+          </button>
+          <button onClick={() => navigate('calculator')} className="bg-emerald-600 text-white px-8 py-4 rounded-full font-bold hover:bg-emerald-500 transition-transform hover:scale-105 flex items-center justify-center gap-2 shadow-lg border border-emerald-500">
+            <Calculator size={20} /> Check Your Impact
+          </button>
+        </div>
       </div>
-    );
-  }
-  return null;
+    </section>
+
+    {/* Quotes Section */}
+    <section className="py-16 px-6 container mx-auto">
+      <div className="grid md:grid-cols-3 gap-8">
+        {[
+          { q: "The greatest threat to our planet is the belief that someone else will save it.", a: "Robert Swan" },
+          { q: "There is no such thing as 'away'. When we throw anything away, it must go somewhere.", a: "Annie Leonard" },
+          { q: "We do not inherit the Earth from our ancestors; we borrow it from our children.", a: "Native American Proverb" }
+        ].map((quote, idx) => (
+          <div key={idx} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative">
+            <div className="text-emerald-200 absolute top-4 left-4 text-6xl font-serif opacity-50">"</div>
+            <p className="text-slate-700 font-medium italic mb-4 relative z-10 pt-4">{quote.q}</p>
+            <p className="text-emerald-600 font-bold text-sm uppercase tracking-wide">— {quote.a}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+);
+
+const MethodsPage = () => (
+  <div className="container mx-auto px-6 py-12 animate-fade-in">
+    <div className="text-center max-w-2xl mx-auto mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Understanding the Methods</h2>
+      <p className="text-slate-600 text-lg">
+        Not all recycling is created equal. See why the industry needs to evolve.
+      </p>
+    </div>
+
+    <div className="grid lg:grid-cols-2 gap-12 items-start">
+      {/* The Old Way */}
+      <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
+        <div className="bg-slate-100 p-6 border-b border-slate-200">
+          <div className="flex items-center gap-3 text-slate-600 mb-2">
+            <XCircle size={24} className="text-red-500" />
+            <span className="font-bold tracking-wider text-sm uppercase">The Old Way</span>
+          </div>
+          <h3 className="text-2xl font-bold text-slate-900">Mechanical Recycling</h3>
+        </div>
+        <div className="p-8">
+          <p className="text-slate-600 mb-6 leading-relaxed">
+            Imagine putting a t-shirt into a giant blender. That's mechanical recycling. It shreds fabric into "shoddy," breaking the fibers apart.
+          </p>
+          <ul className="space-y-4">
+            <li className="flex items-start gap-3">
+              <div className="bg-red-100 p-1 rounded text-red-600 mt-1"><XCircle size={16} /></div>
+              <div>
+                <strong className="block text-slate-900">Damaged Fibers</strong>
+                <span className="text-slate-500 text-sm">Fibers get short and weak. Can't be used for new clothes.</span>
+              </div>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="bg-red-100 p-1 rounded text-red-600 mt-1"><XCircle size={16} /></div>
+              <div>
+                <strong className="block text-slate-900">Downcycling</strong>
+                <span className="text-slate-500 text-sm">Turns into insulation or padding, which eventually ends up in landfills.</span>
+              </div>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="bg-red-100 p-1 rounded text-red-600 mt-1"><XCircle size={16} /></div>
+              <div>
+                <strong className="block text-slate-900">Heavy Waste</strong>
+                <span className="text-slate-500 text-sm">Generates large amounts of unusable fiber dust.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {/* The New Way */}
+      <div className="bg-emerald-50 rounded-3xl shadow-xl overflow-hidden border border-emerald-100 relative">
+        <div className="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">RECOMMENDED</div>
+        <div className="bg-emerald-100/50 p-6 border-b border-emerald-200">
+          <div className="flex items-center gap-3 text-emerald-800 mb-2">
+            <CheckCircle2 size={24} className="text-emerald-600" />
+            <span className="font-bold tracking-wider text-sm uppercase">The Future</span>
+          </div>
+          <h3 className="text-2xl font-bold text-emerald-950">Bio-Enzymatic Recycling</h3>
+        </div>
+        <div className="p-8">
+          <p className="text-emerald-900/70 mb-6 leading-relaxed">
+            This method uses nature's own tools—enzymes—to gently "clean" the fabric. It removes starch and dyes without hurting the cotton.
+          </p>
+          <ul className="space-y-4">
+            <li className="flex items-start gap-3">
+              <div className="bg-emerald-200 p-1 rounded text-emerald-700 mt-1"><CheckCircle2 size={16} /></div>
+              <div>
+                <strong className="block text-emerald-900">Zero Damage</strong>
+                <span className="text-emerald-800/70 text-sm">Fibers stay long and strong. Can be made into new, high-quality clothes.</span>
+              </div>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="bg-emerald-200 p-1 rounded text-emerald-700 mt-1"><CheckCircle2 size={16} /></div>
+              <div>
+                <strong className="block text-emerald-900">Upcycling</strong>
+                <span className="text-emerald-800/70 text-sm">Truly circular. Old shirt → New shirt.</span>
+              </div>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="bg-emerald-200 p-1 rounded text-emerald-700 mt-1"><CheckCircle2 size={16} /></div>
+              <div>
+                <strong className="block text-emerald-900">Valuable Byproducts</strong>
+                <span className="text-emerald-800/70 text-sm">The waste water contains sugars that can be used for fuel or compost!</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const CalculatorPage = () => {
+  const [waste, setWaste] = useState(500);
+  
+  // Constants based on your report data
+  const waterSavedPerKg = 40; // Liters
+  const ghgSavedPerKg = 2.5; // kg CO2e
+  
+  return (
+    <div className="container mx-auto px-6 py-12 animate-fade-in">
+      <div className="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl max-w-4xl mx-auto">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold mb-4 flex justify-center items-center gap-3">
+            <Leaf className="text-emerald-400" /> Impact Calculator
+          </h2>
+          <p className="text-slate-400">
+            See the difference switching to Bio-Enzymatic methods can make.
+          </p>
+        </div>
+
+        <div className="mb-12">
+          <label className="block text-emerald-400 text-sm font-bold mb-4 uppercase tracking-wider text-center">
+            Amount of Textile Waste (kg/month)
+          </label>
+          <div className="flex items-center gap-4 max-w-lg mx-auto">
+            <span className="text-slate-500 font-mono">100kg</span>
+            <input 
+              type="range" 
+              min="100" 
+              max="5000" 
+              step="50" 
+              value={waste} 
+              onChange={(e) => setWaste(parseInt(e.target.value))}
+              className="w-full h-3 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+            />
+            <span className="text-slate-500 font-mono">5000kg</span>
+          </div>
+          <div className="text-center mt-4">
+            <span className="text-4xl font-bold text-white">{waste}</span>
+            <span className="text-slate-400 ml-2">kg</span>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-emerald-500/10 border border-emerald-500/30 p-6 rounded-2xl text-center">
+            <Droplets size={32} className="mx-auto text-blue-400 mb-3" />
+            <div className="text-3xl font-bold text-white mb-1">{(waste * waterSavedPerKg).toLocaleString()} L</div>
+            <div className="text-sm text-emerald-200">Water Saved per Month</div>
+          </div>
+          <div className="bg-emerald-500/10 border border-emerald-500/30 p-6 rounded-2xl text-center">
+            <Leaf size={32} className="mx-auto text-green-400 mb-3" />
+            <div className="text-3xl font-bold text-white mb-1">{(waste * ghgSavedPerKg).toLocaleString()} kg</div>
+            <div className="text-sm text-emerald-200">CO2 Emissions Avoided</div>
+          </div>
+        </div>
+        
+        <p className="text-center text-xs text-slate-500 mt-8">
+          *Calculations based on comparative study of Chemical vs. Bio-Enzymatic desizing processes (2020-2025).
+        </p>
+      </div>
+    </div>
+  );
 };
 
-const App = () => {
-  const [ticker, setTicker] = useState(92450);
-  const [selectedZone, setSelectedZone] = useState(null);
-  const [calcInput, setCalcInput] = useState(5000); // Default to Arvind's scale
-  const [time, setTime] = useState(new Date());
-
-  // Simulation Effects
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTicker(prev => prev + Math.floor(Math.random() * 5));
-      setTime(new Date());
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Filter Data based on map selection
-  const filteredData = selectedZone 
-    ? COMPANY_DATA.filter(c => c.location.includes(selectedZone.name) || (selectedZone.id === 'mumbai' && c.location === 'Mumbai'))
-    : COMPANY_DATA;
-
-  const savingsWater = (calcInput * 45); // 45L per kg (Chemical)
-
-  return (
-    <div className="min-h-screen bg-slate-950 text-slate-400 font-mono p-4 md:p-6 overflow-hidden flex flex-col">
-      
-      {/* Inject Custom Animation Styles */}
-      <style>{`
-        @keyframes marquee {
-          0% { transform: translateX(100%); }
-          100% { transform: translateX(-100%); }
-        }
-        .animate-marquee-custom {
-          animation: marquee 25s linear infinite;
-        }
-      `}</style>
-
-      {/* --- Header / Top Bar --- */}
-      <header className="flex justify-between items-end border-b-2 border-slate-800 pb-4 mb-6">
-        <div>
-          <div className="flex items-center gap-2 text-emerald-500 mb-1">
-            <Activity size={18} className="animate-pulse" />
-            <span className="text-xs font-bold tracking-widest">LIVE MONITORING</span>
-          </div>
-          <h1 className="text-3xl text-slate-100 font-bold tracking-tighter">GAP<span className="text-slate-600">_</span>MONITOR<span className="text-emerald-500">.v1</span></h1>
+const TeamPage = () => (
+  <div className="container mx-auto px-6 py-12 animate-fade-in">
+    <div className="max-w-3xl mx-auto">
+      <div className="text-center mb-12">
+        <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-full font-bold text-sm mb-6">
+          <GraduationCap size={18} />
+          STUDENTS OF DYPIU
         </div>
-        <div className="text-right hidden md:block">
-          <div className="text-2xl text-slate-100 font-bold">{time.toLocaleTimeString()}</div>
-          <div className="text-xs text-slate-600">PUNE_MAHARASHTRA_IST</div>
-        </div>
-      </header>
+        <h2 className="text-4xl font-bold text-slate-900 mb-4">Group 08: IceQuants</h2>
+        <p className="text-slate-600">
+          Dedicated to researching sustainable industrial solutions for a better tomorrow.
+        </p>
+      </div>
 
-      {/* --- Ticker --- */}
-      <div className="bg-slate-900 border-y border-slate-800 py-2 mb-6 overflow-hidden whitespace-nowrap relative">
-        <div className="inline-block animate-marquee-custom text-sm font-medium text-slate-300 whitespace-nowrap">
-          <span className="mx-4 text-emerald-500">● PUNE WASTE GENERATED: {ticker.toLocaleString()} TONS</span>
-          <span className="mx-4 text-blue-500">● SURVEY COMPLETION: 100%</span>
-          <span className="mx-4 text-orange-500">● ADOPTION GAP: CRITICAL</span>
-          <span className="mx-4 text-red-500">● DOMINANT METHOD: MECHANICAL (55% SHARE)</span>
-          <span className="mx-4 text-emerald-500">● BIO-ENZYME EFFICACY: +70% GHG REDUCTION</span>
+      <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden mb-8">
+        <div className="bg-slate-50 px-8 py-4 border-b border-slate-200 flex justify-between items-center">
+          <h3 className="font-bold text-slate-800">Team Members</h3>
+          <Users size={20} className="text-slate-400" />
+        </div>
+        <div className="divide-y divide-slate-100">
+          {[
+            { id: "20230901013", name: "Rahul Patil", role: "Lead Researcher" },
+            { id: "20230901054", name: "Tanvi Mahajan", role: "Research Associate" },
+            { id: "20230901059", name: "Shivangni Shree", role: "Research Associate" },
+            { id: "20230901070", name: "Deep Nirheli", role: "Data Analyst" },
+            { id: "20220901002", name: "Sabreshwar Rout", role: "Technical Lead" },
+          ].map((member) => (
+            <div key={member.id} className="px-8 py-4 flex justify-between items-center hover:bg-slate-50 transition-colors">
+              <div>
+                <div className="font-bold text-slate-900">{member.name}</div>
+                <div className="text-xs text-slate-500">ID: {member.id}</div>
+              </div>
+              <span className="text-xs font-medium px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full">
+                {member.role}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* --- Main Grid Layout --- */}
-      <main className="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-grow">
-        
-        {/* --- LEFT COL: Interactive Map (4 Cols) --- */}
-        <div className="lg:col-span-4 bg-slate-900/50 border border-slate-800 rounded-xl p-4 flex flex-col">
-          <div className="flex justify-between items-center mb-4 border-b border-slate-800 pb-2">
-            <h2 className="text-slate-100 font-bold flex items-center gap-2">
-              <MapPin size={16} /> REGIONAL_MAP
-            </h2>
-            <span className="text-xs bg-slate-800 px-2 py-1 rounded text-slate-400">INTERACTIVE</span>
-          </div>
-          
-          {/* Styled SVG Map */}
-          <div className="relative flex-grow bg-slate-950 rounded border border-slate-800 overflow-hidden group min-h-[300px]">
-            {/* Grid Background */}
-            <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#334155 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
-            
-            {/* Nodes */}
-            {ZONES.map((zone) => (
+      <div className="bg-slate-900 text-white rounded-2xl p-8 text-center">
+        <h3 className="text-xl font-bold mb-4">Get in Touch</h3>
+        <p className="text-slate-400 mb-6">
+          Have questions about our research or want to collaborate?
+        </p>
+        <a href="mailto:20230901013@dypiu.ac.in" className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-bold text-lg transition-colors">
+          <Mail size={20} />
+          20230901013@dypiu.ac.in
+        </a>
+        <div className="mt-4 text-sm text-slate-500 flex justify-center items-center gap-2">
+          <MapPin size={14} />
+          DYPIU Campus, Pune, Maharashtra
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// --- Main Layout ---
+
+const App = () => {
+  const [currentPage, setCurrentPage] = useState('home');
+
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col">
+      {/* Navbar */}
+      <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div className="container mx-auto px-6 h-20 flex justify-between items-center">
+          <button onClick={() => setCurrentPage('home')} className="flex items-center gap-2 group">
+            <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-105 transition-transform">
+              <Recycle size={24} />
+            </div>
+            <div className="text-left">
+              <div className="font-bold text-xl leading-none text-slate-900">IceQuants</div>
+              <div className="text-xs text-slate-500 font-medium">DYPIU Group 08</div>
+            </div>
+          </button>
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex gap-8 font-medium text-slate-600">
+            {['home', 'methods', 'calculator', 'team'].map((page) => (
               <button
-                key={zone.id}
-                onClick={() => setSelectedZone(zone === selectedZone ? null : zone)}
-                className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 group-hover:opacity-100 ${selectedZone && selectedZone.id !== zone.id ? 'opacity-30' : 'opacity-100'}`}
-                style={{ left: `${zone.coords.x}%`, top: `${zone.coords.y}%` }}
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`capitalize hover:text-emerald-600 transition-colors relative py-2 ${
+                  currentPage === page ? 'text-emerald-600 font-bold after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-1 after:bg-emerald-600 after:rounded-full' : ''
+                }`}
               >
-                <div className={`w-4 h-4 rounded-full border-2 ${zone.id === 'thane' ? 'border-emerald-500 bg-emerald-500/20 animate-pulse' : 'border-blue-500 bg-slate-900'}`}></div>
-                <div className="absolute top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-bold bg-slate-900/80 px-2 py-0.5 rounded border border-slate-700 z-10">
-                  {zone.name}
-                </div>
+                {page}
               </button>
             ))}
-
-            {/* Connection Lines (Decorative) */}
-            <svg className="absolute inset-0 pointer-events-none opacity-20">
-              <line x1="20%" y1="60%" x2="30%" y2="20%" stroke="#94a3b8" strokeWidth="1" strokeDasharray="4" />
-              <line x1="30%" y1="20%" x2="60%" y2="40%" stroke="#94a3b8" strokeWidth="1" strokeDasharray="4" />
-              <line x1="60%" y1="40%" x2="55%" y2="50%" stroke="#94a3b8" strokeWidth="1" />
-              <line x1="55%" y1="50%" x2="65%" y2="60%" stroke="#94a3b8" strokeWidth="1" />
-            </svg>
-          </div>
-
-          {/* Selected Zone Info */}
-          <div className="mt-4 h-32 bg-slate-950 border border-slate-800 p-3 rounded text-xs overflow-y-auto">
-            {selectedZone ? (
-              <>
-                <div className="font-bold text-emerald-400 mb-2">{`>> ZONE: ${selectedZone.name.toUpperCase()}`}</div>
-                <div className="mb-2">TYPE: {selectedZone.type}</div>
-                <div className="mb-2">COMPANIES FOUND: {filteredData.length}</div>
-                <div className="space-y-1">
-                  {filteredData.map(c => (
-                    <div key={c.id} className="flex justify-between border-b border-slate-800 pb-1">
-                      <span>{c.name}</span>
-                      <span className={c.method.includes('Bio') ? 'text-emerald-500' : 'text-slate-500'}>{c.method}</span>
-                    </div>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <div className="flex items-center justify-center h-full text-slate-600 italic">
-                Select a zone on map to inspect
-              </div>
-            )}
           </div>
         </div>
+      </nav>
 
-        {/* --- RIGHT COL: Analytics (8 Cols) --- */}
-        <div className="lg:col-span-8 flex flex-col gap-6">
-          
-          {/* Row 1: Scatter Plot (The Core Insight) */}
-          <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 flex-grow min-h-[300px]">
-            <div className="flex justify-between items-center mb-2">
-              <h2 className="text-slate-100 font-bold flex items-center gap-2">
-                <Database size={16} /> SCALE_VS_EFFICACY_ANALYSIS
-              </h2>
-              <div className="flex gap-4 text-xs">
-                 <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500"></span> Bio-Enzymatic</div>
-                 <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-500"></span> Conventional</div>
-              </div>
-            </div>
-            
-            <ResponsiveContainer width="100%" height={300}>
-              <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                <XAxis type="number" dataKey="scale" name="Scale" unit=" kg/mo" stroke="#94a3b8" label={{ value: 'Monthly Production Scale (kg)', position: 'bottom', fill: '#64748b', fontSize: 12 }} />
-                <YAxis type="number" dataKey="ghg" name="GHG Reduction" unit="%" stroke="#94a3b8" label={{ value: 'GHG Reduction %', angle: -90, position: 'left', fill: '#64748b', fontSize: 12 }} />
-                <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
-                <ReferenceLine x={2000} stroke="red" strokeDasharray="3 3" label={{ position: 'top', value: 'Industrial Threshold', fill: 'red', fontSize: 10 }} />
-                
-                {/* Bio Companies */}
-                <Scatter name="Bio" data={filteredData.filter(d => d.method.includes('Bio'))} fill="#10b981" shape="circle" />
-                {/* Conventional Companies */}
-                <Scatter name="Conventional" data={filteredData.filter(d => !d.method.includes('Bio'))} fill="#3b82f6" shape="square" />
-              </ScatterChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Row 2: Impact Calculator */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
-            <div className="flex justify-between items-center mb-4 border-b border-slate-800 pb-2">
-              <h2 className="text-slate-100 font-bold flex items-center gap-2">
-                <Terminal size={16} /> TRANSITION_SIMULATOR
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-               <div>
-                  <label className="text-xs text-slate-500 block mb-2 uppercase tracking-widest">Target Scale (Input)</label>
-                  <div className="flex items-end gap-2 mb-2">
-                     <span className="text-3xl text-white font-bold">{calcInput.toLocaleString()}</span>
-                     <span className="text-sm mb-1 text-slate-500">kg/month</span>
-                  </div>
-                  <input 
-                    type="range" 
-                    min="500" 
-                    max="10000" 
-                    step="500" 
-                    value={calcInput} 
-                    onChange={(e) => setCalcInput(parseInt(e.target.value))}
-                    className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                  />
-                  <p className="text-xs text-slate-600 mt-2">
-                     *Simulating shift from Chemical to Bio-Enzymatic method.
-                  </p>
-               </div>
-
-               <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-slate-950 p-4 border border-slate-800 rounded">
-                     <div className="text-blue-400 text-xs font-bold flex items-center gap-2 mb-1">
-                        <Droplets size={12} /> WATER SAVED
-                     </div>
-                     <div className="text-xl text-white font-bold">{savingsWater.toLocaleString()} L</div>
-                  </div>
-                  <div className="bg-slate-950 p-4 border border-slate-800 rounded">
-                     <div className="text-emerald-400 text-xs font-bold flex items-center gap-2 mb-1">
-                        <Wind size={12} /> GHG REDUCTION
-                     </div>
-                     <div className="text-xl text-white font-bold">70%</div>
-                     <div className="text-[10px] text-emerald-600">vs. 55% baseline</div>
-                  </div>
-               </div>
-            </div>
-          </div>
-
-        </div>
+      {/* Page Content */}
+      <main className="flex-grow">
+        {currentPage === 'home' && <HomePage navigate={setCurrentPage} />}
+        {currentPage === 'methods' && <MethodsPage />}
+        {currentPage === 'calculator' && <CalculatorPage />}
+        {currentPage === 'team' && <TeamPage />}
       </main>
+
+      {/* Footer */}
+      <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div className="container mx-auto px-6 text-center">
+          <div className="flex justify-center items-center gap-2 mb-6 text-emerald-500 font-bold text-xl">
+            <Leaf size={24} /> EcoSustainability Initiative
+          </div>
+          <p className="max-w-md mx-auto mb-8 text-slate-500">
+            "Sustainable development is the pathway to the future we want for all. It offers a framework to generate economic growth, achieve social justice, exercise environmental stewardship and strengthen governance."
+          </p>
+          <div className="text-sm border-t border-slate-800 pt-8">
+            <p>&copy; 2025 Group 08 IceQuants | DY Patil International University</p>
+            <p className="mt-2">Research Duration: 48 Days | Pune & Mumbai Region</p>
+          </div>
+        </div>
+      </footer>
+      
+      {/* Simple CSS Animation injection for Fade In */}
+      <style>{`
+        .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      `}</style>
     </div>
   );
 };
